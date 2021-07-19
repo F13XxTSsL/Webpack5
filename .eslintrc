@@ -1,0 +1,23 @@
+{
+  "root": true,
+  "parser": "babel-eslint",
+  "rules": {
+    "no-unused-vars": "warn",
+    "quotes": [2, "single", { "avoidEscape": true }],
+    "comma-dangle": ["error", "never"],
+    "block-spacing": [2, "always"],
+    "arrow-parens": ["error", "as-needed"],
+    "array-bracket-spacing": "off",
+    "space-before-function-paren": "off",
+    "no-empty-pattern": "off",
+    "no-unneeded-ternary": "off"
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended"
+  ]
+}
