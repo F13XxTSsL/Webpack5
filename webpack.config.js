@@ -6,10 +6,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserWebpackPlugin = require('terser-webpack-plugin')
-const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer')
-const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
-const { extendDefaultPlugins } = require("svgo");
-
+const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
+const {extendDefaultPlugins} = require('svgo');
 
 
 const isDev = process.env.NODE_ENV === 'development'
@@ -21,19 +19,6 @@ const pathDIST = path.resolve(__dirname, 'dist')
 const PAGES_DIR = `${pathSRC}/pages/`
 const PAGES = fs.readdirSync(PAGES_DIR).filter(fileName => fileName.endsWith('.pug'))
 
-
-const cssLoaders = extra => {
-  const loaders = [
-    {
-      loader: MiniCssExtractPlugin.loader,
-    },
-    'css-loader'
-  ]
-  if (extra) {
-    loaders.push(extra)
-  }
-  return loaders
-}
 const optimization = () => {
   const config = {
     splitChunks: {
@@ -51,7 +36,7 @@ const optimization = () => {
 }
 const jsLoaders = () => {
   const loaders = [{
-    loader: "babel-loader",
+    loader: 'babel-loader',
     options: {
       presets: ['@babel/preset-env']
     }
@@ -84,20 +69,20 @@ const plugins = () => {
     new ImageMinimizerPlugin({
       minimizerOptions: {
         plugins: [
-          ["jpegtran", { progressive: true, optimizationLevel: 5 }],
-          ["optipng", { optimizationLevel: 5 }],
-          ["svgo", {
+          ['jpegtran', {progressive: true, optimizationLevel: 5}],
+          ['optipng', {optimizationLevel: 5}],
+          ['svgo', {
             plugins: extendDefaultPlugins([
               {
-                name: "removeViewBox",
-                active: false,
+                name: 'removeViewBox',
+                active: false
               },
               {
-                name: "addAttributesToSVGElement",
+                name: 'addAttributesToSVGElement',
                 params: {
-                  attributes: [{ xmlns: "http://www.w3.org/2000/svg" }],
-                },
-              },
+                  attributes: [{xmlns: 'http://www.w3.org/2000/svg'}]
+                }
+              }
             ])
 
           }]
@@ -170,11 +155,44 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: cssLoaders()
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader'
+          }
+        ]
       },
       {
-        test: /\.s[ac]ss$/,
-        use: cssLoaders('sass-loader')
+        test: /\.scss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [
+                  [
+                    'autoprefixer'
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            loader: 'sass-loader'
+          }
+        ]
+      },
+      {
+        test: /\.pug$/,
+        use: [
+          {
+            loader: 'pug-loader'
+          }
+        ]
       },
       {
         test: /\.(png|svg|jpe?g|gif)$/i,
@@ -188,18 +206,9 @@ module.exports = {
         ]
       },
       {
-        test: /\.(png|jpg)$/,
-        use: {
-          loader: "url-loader",
-          options: {
-            name: '/images/[name].[ext]'
-          }
-        },
-      },
-      {
         test: /\.(ttf|foff)/,
         use: {
-          loader: "file-loader",
+          loader: 'file-loader',
           options: {
             name: 'fonts/[name].[ext]'
           }
@@ -211,5 +220,5 @@ module.exports = {
         use: jsLoaders()
       }
     ]
-  },
+  }
 }

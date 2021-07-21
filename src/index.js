@@ -1,7 +1,12 @@
 import * as $ from 'jquery';
+
+
+// JS
+import './js/index'
+// SCSS
 import './styles/index'
-import './analytics'
-import Post from './components/Post/Post';
+
+import Post from './components/post/post';
 
 const post = new Post('Webpack post title')
 

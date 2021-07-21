@@ -1,20 +1,14 @@
 @import "fonts";
-@import "../components/Post/post";
+@import "../components/post/post";
 
 body {
   font-family: 'Roboto', sans-serif;
-  background-color: transparent;
 }
 
 .container {
   padding-top: 2rem;
-  max-width: 1000px;
-  margin: 0 auto;
+  display: flex;
 
-
-}
-h1 {
-  text-align: center;
 }
 
 

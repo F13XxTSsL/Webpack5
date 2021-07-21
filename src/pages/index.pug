@@ -1,6 +1,12 @@
-doctype html
-html(lang="en")
-	head
-		title Main
-	body
-		div.post
+extends layout/main
+
+block variables
+	- const title = 'Main';
+	- const description = 'Description'
+	- const pageClass = 'main-page'
+
+block content
+	section.heroimage
+		.container
+			h1 heroimage
+			img(src="../../images/aiva2.jpg")

@@ -1,0 +1,11 @@
+block variables
+
+doctype html
+html(lang="en")
+    head
+        title=title
+        meta(name="description", content=description)
+    body(class=pageClass)
+        include ../../components/header/header
+        block content
+        include ../../components/footer/footer
